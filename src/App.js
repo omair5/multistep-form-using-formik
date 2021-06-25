@@ -1,10 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
+import HorizontalStepper from './Components/HorizontalStepper';
 
 function App() {
   return (
-    <div>
-      multi step form using formik
+    <div className='mainContainer'>
+      <HorizontalStepper />
     </div>
   );
 }

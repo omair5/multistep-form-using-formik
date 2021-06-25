@@ -1,0 +1,23 @@
+.mainContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.stepperContainer {
+    margin: 15px auto;
+}
+
+.formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    background-color: blue;
+}
+
+.buttonContainer {
+    margin: 25px auto;
+}
