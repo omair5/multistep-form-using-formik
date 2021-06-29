@@ -11,7 +11,8 @@ export default function FormTextField({ name, ...otherprops }) {
   // const classes = useStyles();
 
   const [field, meta] = useField(name)
-  console.log(field, meta)
+
+  console.log('textfield', field)
 
   const configTextField = {
     fullWidth: true,

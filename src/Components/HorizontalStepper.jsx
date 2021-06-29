@@ -1,3 +1,13 @@
+// ----------important propos for formik other than NAME which links our whole form
+// 1-initial StaticRange
+// 2-validation isSchema
+// 3-onsubmit
+
+// ----------TWO IMPORTANT TECHNIQUES TO HANDLE DATA
+// 1- either use <Formik> </Formik> wrapper in every step separately and then handle initialValues, validationSchema & onSubmit for every step
+//  and submit data from each step separately
+// 2- or you can use <Formik> </Formik> wrapper on parent component and handle everything from parent component
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
@@ -10,6 +20,10 @@ import Card from '@material-ui/core/Card';
 import PersonalData from './PersonalData';
 import BookingInfo from './BookingInfo';
 import Address from './Address';
+import { Formik, Form, ErrorMessage } from 'formik'
+import * as yup from 'yup';
+
+
 
 const useStyles = makeStyles((theme) => ({
     backButton: {
@@ -51,45 +65,71 @@ export default function HorizontalStepper() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleReset = () => {
-        setActiveStep(0);
-    };
+    const initialState = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        gender: '',
+        hobbies: ''
+    }
+    const validationSchema = yup.object().shape({
+        firstName: yup.string().required('This Field Is Required'),
+        lastName: yup.string().required('This Field Is Required'),
+        email: yup.string().email('Invalid Email Address').required('This Field Is Required'),
+        phone: yup.number().integer().typeError('Please Enter A Valid Phone Number').required('This Field Is Required'),
+        gender: yup.string().required('This Field Is Required')
+    })
+
+    const HandleSubmit = (values) => {
+        if (activeStep === getSteps().length - 1) {
+            console.log('these are form values', values)
+        }
+        else {
+            handleNext()
+        }
+    }
+
 
     return (
         <Container maxWidth="md">
-            <Card>
-                <Stepper activeStep={activeStep} alternativeLabel className='stepperContainer'>
-                    {steps.map((label) => (
-                        <Step key={label}>
-                            <StepLabel>{label}</StepLabel>
-                        </Step>
-                    ))}
-                </Stepper>
-                <div className='formContainer'>
-                    {activeStep === steps.length ? (
-                        <div>
-                            <Typography className={classes.instructions}>All steps completed</Typography>
-                        </div>
-                    ) : (
-                        <div>
-                            <Typography component={'div'} className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                            <div className='buttonContainer'>
-                                <Button
-                                    disabled={activeStep === 0}
-                                    onClick={handleBack}
-                                    className={classes.backButton}
-                                >
-                                    Back
-                                </Button>
+            <Formik initialValues={initialState} validationSchema={validationSchema} onSubmit={HandleSubmit}>
+                <Form>
+                    <Card>
+                        <Stepper activeStep={activeStep} alternativeLabel className='stepperContainer'>
+                            {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                        <div className='formContainer'>
+                            {activeStep === steps.length ? (
+                                <div>
+                                    <Typography className={classes.instructions}>All steps completed</Typography>
+                                </div>
+                            ) : (
+                                <div>
+                                    <Typography component={'div'} className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                                    <div className='buttonContainer'>
+                                        <Button
+                                            disabled={activeStep === 0}
+                                            onClick={handleBack}
+                                            className={classes.backButton}
+                                        >
+                                            Back
+                                        </Button>
 
-                                <Button variant="contained" color="primary" onClick={handleNext}>
-                                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
-                                </Button>
-                            </div>
+                                        <Button variant="contained" color="primary" type='submit'>
+                                            {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                                        </Button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
-            </Card>
+                    </Card>
+                </Form>
+            </Formik>
         </Container>
     );
 }
