@@ -1,108 +1,86 @@
 import React from 'react';
-import { Formik, Form, ErrorMessage } from 'formik'
-import * as yup from 'yup';
+import { ErrorMessage } from 'formik'
 import FormTextField from '../FormFields/FormTextField';
 import FormRadioButton from '../FormFields/FormRadioButton';
 import { FormHelperText } from '@material-ui/core';
 import FormCheckBox from '../FormFields/FormCheckBox';
 
+const checkBoxValues = ['Reading Books', 'Eating', 'Guitar', 'Surfing']
+
 const PersonalData = () => {
-    // ----------important propos for formik other than NAME which links our whole form
-    // 1-initial StaticRange
-    // 2-validation isSchema
-    // 3-onsubmit
-    // const initialState = {
-    //     firstName: '',
-    //     lastName: '',
-    //     email: '',
-    //     phone: '',
-    //     gender: ''
-    // }
-    // const validationSchema = yup.object().shape({
-    //     firstName: yup.string().required('This Field Is Required'),
-    //     lastName: yup.string().required('This Field Is Required'),
-    //     email: yup.string().email('Invalid Email Address').required('This Field Is Required'),
-    //     phone: yup.number().integer().typeError('Please Enter A Valid Phone Number').required('This Field Is Required'),
-    //     gender: yup.string().required('This Field Is Required')
-    // })
-
-    // const HandleSubmit = (values) => {
-    //     console.log(HandleSubmit)
-    // }
-
     return (
         <>
 
             {/* FIRST NAME */}
-            <FormTextField
-                name='firstName'
-                label='First Name'
-            />
+            <div className='field'>
+                <FormTextField
+                    name='firstName'
+                    label='First Name'
+                />
+            </div>
 
             {/* LAST NAME */}
-            <FormTextField
-                name='lastName'
-                label='Last Name'
+            <div className='field'>
+                <FormTextField
+                    name='lastName'
+                    label='Last Name'
+                />
+            </div>
 
-            />
 
             {/* EMAIL */}
-            <FormTextField
-                name='email'
-                label='Email Address'
-
-            />
+            <div className='field'>
+                <FormTextField
+                    name='email'
+                    label='Email Address'
+                />
+            </div>
 
             {/* PHONE */}
-            <FormTextField
-                name='phone'
-                label='Phone'
+            <div className='field'>
+                <FormTextField
+                    name='phone'
+                    label='Phone'
+                />
+            </div>
 
-            />
+            <div className='field'>
+                <div className='label'>Gender</div>
+                <FormRadioButton
+                    label='MALE'
+                    name='gender'
+                    value='male'
+                    type='radio'
+                />
 
-            <FormRadioButton
-                label='MALE'
-                name='gender'
-                value='male'
-                type='radio'
-            />
+                <FormRadioButton
+                    label='FEMALE'
+                    name='gender'
+                    value='female'
+                    type='radio'
 
-            <FormRadioButton
-                label='FEMALE'
-                name='gender'
-                value='female'
-                type='radio'
+                />
 
-            />
+                <FormHelperText error={true}>
+                    <ErrorMessage name='gender' />
+                </FormHelperText>
+            </div>
 
-            <FormHelperText error={true}>
-                <ErrorMessage name='gender' />
-            </FormHelperText>
+            <div className='field'>
+                <div className='label'>Hobbies</div>
+                {
+                    checkBoxValues.map((value, index) => (
+                        <FormCheckBox
+                            label={value}
+                            name='hobbies'
+                            value={ value }
+                            type='checkbox'
+                            key={index}
+                        />
+                    ))
+                }
 
-            <FormCheckBox
-                label='Reading Books'
-                name='hobbies'
-                value='Reading Books'
-                type='checkbox'
-            />
-            <FormCheckBox
-                label='Eating'
-                name='hobbies'
-                value='Eating'
-                type='checkbox'
-            />
-            <FormCheckBox
-                label='Guitar'
-                name='hobbies'
-                value='Guitar'
-                type='checkbox'
-            />
-            <FormCheckBox
-                label='Surfing'
-                name='hobbies'
-                value='Surfing'
-                type='checkbox'
-            />
+            </div>
         </>
     );
 }

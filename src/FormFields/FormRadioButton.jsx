@@ -6,8 +6,8 @@ import { useField } from 'formik';
 
 export default function FormRadioButton({ label, ...otherProps }) {
 
-    const [field, meta] = useField(otherProps)
-    console.log('radio button', field)
+    const [field] = useField(otherProps)
+
     const radioButtonConfig = {
         label: label,
         ...field

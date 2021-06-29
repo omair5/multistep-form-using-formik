@@ -20,7 +20,7 @@ import Card from '@material-ui/core/Card';
 import PersonalData from './PersonalData';
 import BookingInfo from './BookingInfo';
 import Address from './Address';
-import { Formik, Form, ErrorMessage } from 'formik'
+import { Formik, Form } from 'formik'
 import * as yup from 'yup';
 
 
@@ -92,44 +92,46 @@ export default function HorizontalStepper() {
 
 
     return (
-        <Container maxWidth="md">
-            <Formik initialValues={initialState} validationSchema={validationSchema} onSubmit={HandleSubmit}>
-                <Form>
-                    <Card>
-                        <Stepper activeStep={activeStep} alternativeLabel className='stepperContainer'>
-                            {steps.map((label) => (
-                                <Step key={label}>
-                                    <StepLabel>{label}</StepLabel>
-                                </Step>
-                            ))}
-                        </Stepper>
-                        <div className='formContainer'>
-                            {activeStep === steps.length ? (
-                                <div>
-                                    <Typography className={classes.instructions}>All steps completed</Typography>
-                                </div>
-                            ) : (
-                                <div>
-                                    <Typography component={'div'} className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                                    <div className='buttonContainer'>
-                                        <Button
-                                            disabled={activeStep === 0}
-                                            onClick={handleBack}
-                                            className={classes.backButton}
-                                        >
-                                            Back
-                                        </Button>
-
-                                        <Button variant="contained" color="primary" type='submit'>
-                                            {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
-                                        </Button>
+        <>
+            <Container maxWidth="sm">
+                <Formik initialValues={initialState} validationSchema={validationSchema} onSubmit={HandleSubmit}>
+                    <Form>
+                        <Card>
+                            <Stepper activeStep={activeStep} alternativeLabel className='stepperContainer'>
+                                {steps.map((label) => (
+                                    <Step key={label}>
+                                        <StepLabel>{label}</StepLabel>
+                                    </Step>
+                                ))}
+                            </Stepper>
+                            <div className='formContainer'>
+                                {activeStep === steps.length ? (
+                                    <div>
+                                        <Typography className={classes.instructions}>All steps completed</Typography>
                                     </div>
-                                </div>
-                            )}
-                        </div>
-                    </Card>
-                </Form>
-            </Formik>
-        </Container>
+                                ) : (
+                                    <Container maxWidth='sm'>
+                                        <Typography component={'div'} className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                                        <div className='buttonContainer'>
+                                            <Button
+                                                disabled={activeStep === 0}
+                                                onClick={handleBack}
+                                                className={classes.backButton}
+                                            >
+                                                Back
+                                            </Button>
+
+                                            <Button variant="contained" color="primary" type='submit'>
+                                                {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                                            </Button>
+                                        </div>
+                                    </Container>
+                                )}
+                            </div>
+                        </Card>
+                    </Form>
+                </Formik>
+            </Container>
+        </>
     );
 }

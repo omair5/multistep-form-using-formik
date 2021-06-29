@@ -4,8 +4,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { useField } from 'formik';
 
 export default function FormCheckBox({ label, ...otherProps }) {
-    const [field, meta] = useField(otherProps)
-    console.log('checkbox', field)
+    const [field] = useField(otherProps)
+
     const configCheckBox = {
         color: 'primary',
         ...field
