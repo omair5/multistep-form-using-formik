@@ -28,9 +28,14 @@ body {
 }
 
 .field {
-    margin: 15px 0px;
+    margin: 20px 0px;
 }
 
 .label {
     font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.address{
+    margin: 7px 0px;
 }

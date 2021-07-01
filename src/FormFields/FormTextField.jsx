@@ -1,17 +1,9 @@
 import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { useField } from 'formik';
 
-// const useStyles = makeStyles((theme) => ({
-
-// }));
-
 export default function FormTextField({ name, ...otherprops }) {
-  // const classes = useStyles();
-
   const [field, meta] = useField(name)
-
 
   const configTextField = {
     fullWidth: true,

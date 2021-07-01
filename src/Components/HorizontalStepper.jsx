@@ -21,8 +21,7 @@ import PersonalData from './PersonalData';
 import BookingInfo from './BookingInfo';
 import Address from './Address';
 import { Formik, Form } from 'formik'
-import * as yup from 'yup';
-
+import ValidationSchemaFile from './ValidationSchemaFile';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +56,10 @@ export default function HorizontalStepper() {
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
 
+    const currentSchema = ValidationSchemaFile[activeStep]
+
+
+
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -71,30 +74,32 @@ export default function HorizontalStepper() {
         email: '',
         phone: '',
         gender: '',
-        hobbies: ''
+        hobbies: '',
+        addresslineone: '',
+        addresslinetwo: '',
+        city: '',
+        state: '',
+        country: '',
+        arrivaldate: '',
+        departuredate: '',
+        message: ''
     }
-    const validationSchema = yup.object().shape({
-        firstName: yup.string().required('This Field Is Required'),
-        lastName: yup.string().required('This Field Is Required'),
-        email: yup.string().email('Invalid Email Address').required('This Field Is Required'),
-        phone: yup.number().integer().typeError('Please Enter A Valid Phone Number').required('This Field Is Required'),
-        gender: yup.string().required('This Field Is Required')
-    })
 
-    const HandleSubmit = (values) => {
+
+    const HandleSubmit = (values, { resetForm }) => {
         if (activeStep === getSteps().length - 1) {
             console.log('these are form values', values)
+            resetForm()
         }
         else {
             handleNext()
         }
     }
 
-
     return (
         <>
             <Container maxWidth="sm">
-                <Formik initialValues={initialState} validationSchema={validationSchema} onSubmit={HandleSubmit}>
+                <Formik initialValues={initialState} validationSchema={currentSchema} onSubmit={HandleSubmit}>
                     <Form>
                         <Card>
                             <Stepper activeStep={activeStep} alternativeLabel className='stepperContainer'>

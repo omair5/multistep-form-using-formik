@@ -73,7 +73,7 @@ const PersonalData = () => {
                         <FormCheckBox
                             label={value}
                             name='hobbies'
-                            value={ value }
+                            value={value}
                             type='checkbox'
                             key={index}
                         />
